@@ -5,10 +5,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>In-Flight Catering Waste</title>
 
-  <!-- Home Screen & Favicon Fix -->
-  <link rel="apple-touch-icon" sizes="180x180" href="https://i.postimg.cc/d1RX89tH/Aero.png">
-  <link rel="shortcut icon" href="https://i.postimg.cc/d1RX89tH/Aero.png">
+  <!-- Favicon & Home Screen App Icon -->
+  <link rel="apple-touch-icon" sizes="180x180" href="https://i.postimg.cc/gcqc27Qf/symbol-aero-medium.png">
+  <link rel="icon" type="image/png" href="https://i.postimg.cc/gcqc27Qf/symbol-aero-medium.png">
   <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="In-Flight Catering Waste">
   <meta name="theme-color" content="#000000">
 
   <style>
@@ -33,45 +34,33 @@
     }
 
     .container {
-      width: 90%;
-      max-width: 700px;
-      background: rgba(0, 0, 0, 0.85);
-      padding: 20px;
-      border-radius: 12px;
-      margin-top: 50px;
-      text-align: center;
-    }
-
-    .logo {
-      width: 80px;
-      margin-bottom: 10px;
-    }
-
-    h1 {
-      font-size: 24px;
-      font-weight: bold;
-      margin-bottom: 10px;
+      width: 72%;
+      max-width: 630px;
+      background: rgba(0, 0, 0, 0.8);
+      padding: 14px;
+      border-radius: 10px;
+      margin-top: 160px;
     }
 
     .guidance-text {
-      font-size: 14px;
+      font-size: 13px;
       color: #ddd;
-      margin-bottom: 15px;
+      margin-bottom: 10px;
     }
 
     .input-group {
       display: flex;
       justify-content: center;
-      gap: 10px;
-      padding: 10px;
       width: 100%;
+      gap: 6px;
+      padding: 6px;
     }
 
     .input-group input, .input-group select {
-      font-size: 16px;
-      padding: 10px;
-      width: 48%;
-      border: 1px solid #ccc;
+      font-size: 14px;
+      padding: 8px;
+      width: 45%;
+      border: 1px solid #CCC;
       border-radius: 6px;
       text-align: center;
       background: white;
@@ -81,28 +70,28 @@
     table {
       width: 100%;
       border-collapse: collapse;
-      font-size: 14px;
-      margin-top: 15px;
-      background: rgba(255, 255, 255, 0.95);
+      font-size: 13px;
+      margin-top: 8px;
+      background: rgba(255, 255, 255, 0.9);
       color: black;
-      border-radius: 8px;
+      border-radius: 6px;
     }
 
     th, td {
-      padding: 12px;
+      padding: 6px;
       text-align: left;
       border-bottom: 1px solid #ddd;
     }
 
     th {
       background-color: #F5F5F5;
-      font-weight: bold;
+      font-weight: 600;
     }
 
     input[type="number"] {
-      font-size: 14px;
-      width: 60px;
-      padding: 5px;
+      font-size: 13px;
+      max-width: 60px;
+      padding: 4px;
       text-align: center;
       border-radius: 6px;
       border: 1px solid #CCC;
@@ -110,8 +99,8 @@
     }
 
     button {
-      font-size: 16px;
-      padding: 12px;
+      font-size: 14px;
+      padding: 8px;
       width: 100%;
       background-color: #FF6600;
       color: #FFF;
@@ -119,7 +108,7 @@
       border-radius: 8px;
       cursor: pointer;
       font-weight: bold;
-      margin-top: 20px;
+      margin-top: 10px;
       transition: background 0.3s;
     }
 
@@ -135,10 +124,11 @@
     .status-message {
       font-size: 14px;
       font-weight: bold;
-      margin-top: 12px;
       padding: 8px;
+      margin-top: 8px;
       border-radius: 5px;
       display: none;
+      min-height: 40px;
     }
 
     .success-message {
@@ -151,13 +141,10 @@
       background: rgba(255, 0, 0, 0.2);
     }
   </style>
-
 </head>
 <body>
 
   <div class="container">
-    <img src="https://i.postimg.cc/d1RX89tH/Aero.png" alt="Aero Logo" class="logo">
-    <h1>In-Flight Catering Waste</h1>
     <p class="guidance-text">Submit one entry per sector (e.g., VNY-SJD). This form is only for scheduled services that cater Erewhon or Flora Farms.</p>
 
     <div class="input-group">
@@ -167,6 +154,20 @@
         <option value="ASE/VNY">ASE/VNY</option>
         <option value="VNY/SJD">VNY/SJD</option>
         <option value="SJD/VNY">SJD/VNY</option>
+        <option value="VNY/RIL">VNY/RIL</option>
+        <option value="RIL/VNY">RIL/VNY</option>
+        <option value="VNY/SUN">VNY/SUN</option>
+        <option value="SUN/VNY">SUN/VNY</option>
+        <option value="VNY/SLC">VNY/SLC</option>
+        <option value="SLC/VNY">SLC/VNY</option>
+        <option value="VNY/LAS">VNY/LAS</option>
+        <option value="LAS/VNY">LAS/VNY</option>
+        <option value="VNY/TRM">VNY/TRM</option>
+        <option value="TRM/VNY">TRM/VNY</option>
+        <option value="VNY/APC">VNY/APC</option>
+        <option value="APC/VNY">APC/VNY</option>
+        <option value="VNY/CSL">VNY/CSL</option>
+        <option value="CSL/VNY">CSL/VNY</option>
       </select>
     </div>
 
@@ -182,7 +183,58 @@
     <p id="response" class="status-message"></p>
   </div>
 
-  <script src="app.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      var tableBody = document.getElementById("foodItems");
+      var items = [
+        "Organic Strawberry Overnight Oats",
+        "Smoked Salmon Tartine",
+        "Organic Brownie GF",
+        "Organic Asian Chicken Salad",
+        "Cheese Box",
+        "Cheese & Charcuterie Plate",
+        "Mezze Plate: Item 1003",
+        "Organic Roast Beef Sandwich",
+        "Tofu Sticks with Tibetan Power Salad",
+        "Chicken Salad Slider",
+        "Turkey Slider with Veggies & Strawberries",
+        "Blueberries / Cut Strawberries",
+        "Chocolate Chip Banana Bread",
+        "FF - Caesar Salad",
+        "FF - Burrata Salad",
+        "FF - Chicken Salad Sandwich",
+        "FF - Mango Chia Pudding",
+        "FF - Chocolate Chip Cookie"
+      ];
+
+      items.forEach((item, index) => {
+        var row = tableBody.insertRow();
+        row.insertCell(0).innerHTML = item;
+        row.insertCell(1).innerHTML = `<input type='number' min='0' id='waste_${index}' value='0'>`;
+      });
+
+      window.items = items;
+    });
+
+    function submitWaste() {
+      var date = document.getElementById("flightDate").value;
+      var flightRoute = document.getElementById("flightRoute").value;
+      var response = document.getElementById("response");
+      var submitBtn = document.getElementById("submitBtn");
+
+      var wasteData = {};
+      document.querySelectorAll("input[id^='waste_']").forEach((input, index) => {
+        wasteData[window.items[index].trim().toLowerCase()] = input.value ? parseInt(input.value) : 0;
+      });
+
+      submitBtn.disabled = true;
+
+      fetch("https://script.google.com/a/macros/aero.com/s/AKfycbyGu1aD6u014Pj7zvzx2ylnR8-kQhmJ8rbYrzaBQ2lfUOt9HJKIhu_v6JMKqw3lZv22/exec", {
+        method: "POST",
+        body: JSON.stringify({ date, flightRoute, wasteData }),
+      });
+    }
+  </script>
 
 </body>
 </html>
