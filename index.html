@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Waste Report</title>
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <h1>In-Flight Catering Waste</h1>
+
+  <label for="flightDate">Flight Date:</label>
+  <input type="date" id="flightDate">
+
+  <label for="flightRoute">Flight Route:</label>
+  <select id="flightRoute">
+    <option value="VNY/ASE">VNY/ASE</option>
+    <option value="ASE/VNY">ASE/VNY</option>
+  </select>
+
+  <button onclick="submitWaste()">Submit</button>
+  <p id="response"></p>
+</body>
+</html>
