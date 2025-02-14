@@ -1,22 +1,127 @@
+@font-face {
+  font-family: 'Helvetica Neue';
+  src: local('Helvetica Neue'), url('https://fonts.cdnfonts.com/s/41954/HelveticaNeue.woff') format('woff');
+}
+
 body {
-  font-family: Arial, sans-serif;
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+  background: url("https://i.postimg.cc/d1RX89tH/Aero.png") no-repeat center top;
+  background-size: cover;
+  color: #fff;
   text-align: center;
-  padding: 20px;
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
-label {
-  font-weight: bold;
+.container {
+  width: 75%;
+  max-width: 650px;
+  background: rgba(0, 0, 0, 0.8);
+  padding: 15px;
+  border-radius: 10px;
+  margin-top: 180px;
 }
 
-input, select, button {
+.guidance-text {
+  font-size: 13px;
+  color: #ddd;
+  margin-bottom: 12px;
+}
+
+.input-group {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  gap: 8px;
   padding: 8px;
-  margin: 5px;
-  font-size: 16px;
+}
+
+.input-group input, .input-group select {
+  font-size: 15px;
+  padding: 12px;
+  width: 47%;
+  border: 1px solid #CCC;
+  border-radius: 6px;
+  text-align: center;
+  background: white;
+  color: black;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+  margin-top: 10px;
+  background: rgba(255, 255, 255, 0.9);
+  color: black;
+  border-radius: 6px;
+}
+
+th, td {
+  padding: 10px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+th {
+  background-color: #F5F5F5;
+  font-weight: 600;
+}
+
+input[type="number"] {
+  font-size: 14px;
+  width: 100%;
+  max-width: 70px;
+  padding: 5px;
+  text-align: center;
+  border-radius: 6px;
+  border: 1px solid #CCC;
+  background: white;
 }
 
 button {
-  background-color: orange;
-  color: white;
+  font-size: 16px;
+  padding: 10px;
+  width: 100%;
+  background-color: #FF6600;
+  color: #FFF;
   border: none;
+  border-radius: 8px;
   cursor: pointer;
+  font-weight: bold;
+  margin-top: 15px;
+  transition: background 0.3s;
+}
+
+button:hover {
+  background-color: #E65C00;
+}
+
+button:disabled {
+  background-color: grey;
+  cursor: not-allowed;
+}
+
+.status-message {
+  font-size: 14px;
+  font-weight: bold;
+  margin-top: 12px;
+  padding: 8px;
+  border-radius: 5px;
+  display: none;
+}
+
+.success-message {
+  color: green;
+  background: rgba(0, 255, 0, 0.2);
+}
+
+.error-message {
+  color: red;
+  background: rgba(255, 0, 0, 0.2);
 }
