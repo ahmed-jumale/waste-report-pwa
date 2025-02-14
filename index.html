@@ -217,23 +217,55 @@
     });
 
     function submitWaste() {
-      var date = document.getElementById("flightDate").value;
-      var flightRoute = document.getElementById("flightRoute").value;
-      var response = document.getElementById("response");
-      var submitBtn = document.getElementById("submitBtn");
+  var date = document.getElementById("flightDate").value;
+  var flightRoute = document.getElementById("flightRoute").value;
+  var response = document.getElementById("response");
+  var submitBtn = document.getElementById("submitBtn");
 
-      var wasteData = {};
-      document.querySelectorAll("input[id^='waste_']").forEach((input, index) => {
-        wasteData[window.items[index].trim().toLowerCase()] = input.value ? parseInt(input.value) : 0;
-      });
+  if (!date) {
+    response.innerHTML = "⚠️ Please select a flight date!";
+    response.classList.add("error-message");
+    response.style.display = "block";
+    return;
+  }
 
-      submitBtn.disabled = true;
+  var wasteData = {};
+  document.querySelectorAll("input[id^='waste_']").forEach((input, index) => {
+    wasteData[window.items[index].trim().toLowerCase()] = input.value ? parseInt(input.value) : 0;
+  });
 
-      fetch("https://script.google.com/a/macros/aero.com/s/AKfycbyGu1aD6u014Pj7zvzx2ylnR8-kQhmJ8rbYrzaBQ2lfUOt9HJKIhu_v6JMKqw3lZv22/exec", {
-        method: "POST",
-        body: JSON.stringify({ date, flightRoute, wasteData }),
-      });
+  submitBtn.disabled = true;
+  response.innerHTML = "⏳ Submitting...";
+  response.style.display = "block";
+
+  fetch("https://script.google.com/a/macros/aero.com/s/AKfycbyGu1aD6u014Pj7zvzx2ylnR8-kQhmJ8rbYrzaBQ2lfUOt9HJKIhu_v6JMKqw3lZv22/exec", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ date, flightRoute, wasteData }),
+  })
+  .then(res => res.json())
+  .then(data => {
+    if (data.success) {
+      response.innerHTML = "✅ Submission successful!";
+      response.classList.add("success-message");
+    } else {
+      response.innerHTML = "⚠️ Submission failed. Check your Google Apps Script.";
+      response.classList.add("error-message");
     }
+  })
+  .catch(error => {
+    console.error("Error:", error);
+    response.innerHTML = "❌ Error submitting. Check console.";
+    response.classList.add("error-message");
+  })
+  .finally(() => {
+    submitBtn.disabled = false; // Re-enable the button
+    setTimeout(() => {
+      response.style.display = "none";
+    }, 5000);
+  });
+}
+
   </script>
 
 </body>
