@@ -11,7 +11,146 @@
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="theme-color" content="#000000">
 
-  <link rel="stylesheet" href="styles.css"> <!-- Ensure styles.css is linked -->
+  <style>
+    @font-face {
+      font-family: 'Helvetica Neue';
+      src: local('Helvetica Neue'), url('https://fonts.cdnfonts.com/s/41954/HelveticaNeue.woff') format('woff');
+    }
+
+    body {
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+      background: url("https://i.postimg.cc/d1RX89tH/Aero.png") no-repeat center top;
+      background-size: cover;
+      color: #fff;
+      text-align: center;
+      margin: 0;
+      padding: 0;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .container {
+      width: 90%;
+      max-width: 700px;
+      background: rgba(0, 0, 0, 0.85);
+      padding: 20px;
+      border-radius: 12px;
+      margin-top: 50px;
+      text-align: center;
+    }
+
+    .logo {
+      width: 80px;
+      margin-bottom: 10px;
+    }
+
+    h1 {
+      font-size: 24px;
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+
+    .guidance-text {
+      font-size: 14px;
+      color: #ddd;
+      margin-bottom: 15px;
+    }
+
+    .input-group {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      padding: 10px;
+      width: 100%;
+    }
+
+    .input-group input, .input-group select {
+      font-size: 16px;
+      padding: 10px;
+      width: 48%;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      text-align: center;
+      background: white;
+      color: black;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 14px;
+      margin-top: 15px;
+      background: rgba(255, 255, 255, 0.95);
+      color: black;
+      border-radius: 8px;
+    }
+
+    th, td {
+      padding: 12px;
+      text-align: left;
+      border-bottom: 1px solid #ddd;
+    }
+
+    th {
+      background-color: #F5F5F5;
+      font-weight: bold;
+    }
+
+    input[type="number"] {
+      font-size: 14px;
+      width: 60px;
+      padding: 5px;
+      text-align: center;
+      border-radius: 6px;
+      border: 1px solid #CCC;
+      background: white;
+    }
+
+    button {
+      font-size: 16px;
+      padding: 12px;
+      width: 100%;
+      background-color: #FF6600;
+      color: #FFF;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: bold;
+      margin-top: 20px;
+      transition: background 0.3s;
+    }
+
+    button:hover {
+      background-color: #E65C00;
+    }
+
+    button:disabled {
+      background-color: grey;
+      cursor: not-allowed;
+    }
+
+    .status-message {
+      font-size: 14px;
+      font-weight: bold;
+      margin-top: 12px;
+      padding: 8px;
+      border-radius: 5px;
+      display: none;
+    }
+
+    .success-message {
+      color: green;
+      background: rgba(0, 255, 0, 0.2);
+    }
+
+    .error-message {
+      color: red;
+      background: rgba(255, 0, 0, 0.2);
+    }
+  </style>
 
 </head>
 <body>
@@ -23,27 +162,12 @@
 
     <div class="input-group">
       <input type="date" id="flightDate" required>
-     <select id="flightRoute">
-  <option value="VNY/ASE">VNY/ASE</option>
-  <option value="ASE/VNY">ASE/VNY</option>
-  <option value="VNY/SJD">VNY/SJD</option>
-  <option value="SJD/VNY">SJD/VNY</option>
-  <option value="VNY/RIL">VNY/RIL</option>
-  <option value="RIL/VNY">RIL/VNY</option>
-  <option value="VNY/SUN">VNY/SUN</option>
-  <option value="SUN/VNY">SUN/VNY</option>
-  <option value="VNY/SLC">VNY/SLC</option>
-  <option value="SLC/VNY">SLC/VNY</option>
-  <option value="VNY/LAS">VNY/LAS</option>
-  <option value="LAS/VNY">LAS/VNY</option>
-  <option value="VNY/TRM">VNY/TRM</option>
-  <option value="TRM/VNY">TRM/VNY</option>
-  <option value="VNY/APC">VNY/APC</option>
-  <option value="APC/VNY">APC/VNY</option>
-  <option value="VNY/CSL">VNY/CSL</option>
-  <option value="CSL/VNY">CSL/VNY</option>
-</select>
-
+      <select id="flightRoute">
+        <option value="VNY/ASE">VNY/ASE</option>
+        <option value="ASE/VNY">ASE/VNY</option>
+        <option value="VNY/SJD">VNY/SJD</option>
+        <option value="SJD/VNY">SJD/VNY</option>
+      </select>
     </div>
 
     <table>
