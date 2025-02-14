@@ -2,24 +2,63 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Waste Report</title>
-  <link rel="stylesheet" href="styles.css">  <!-- ✅ Make sure this line exists -->
-  <script src="app.js" defer></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>In-Flight Catering Waste</title>
+
+  <!-- Home Screen & Favicon Fix -->
+  <link rel="apple-touch-icon" sizes="180x180" href="https://i.postimg.cc/d1RX89tH/Aero.png">
+  <link rel="shortcut icon" href="https://i.postimg.cc/d1RX89tH/Aero.png">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="theme-color" content="#000000">
+
+  <link rel="stylesheet" href="styles.css"> <!-- Ensure styles.css is linked -->
+
 </head>
 <body>
-  <h1>In-Flight Catering Waste</h1>
 
-  <label for="flightDate">Flight Date:</label>
-  <input type="date" id="flightDate">
+  <div class="container">
+    <img src="https://i.postimg.cc/d1RX89tH/Aero.png" alt="Aero Logo" class="logo">
+    <h1>In-Flight Catering Waste</h1>
+    <p class="guidance-text">Submit one entry per sector (e.g., VNY-SJD). This form is only for scheduled services that cater Erewhon or Flora Farms.</p>
 
-  <label for="flightRoute">Flight Route:</label>
-  <select id="flightRoute">
-    <option value="VNY/ASE">VNY/ASE</option>
-    <option value="ASE/VNY">ASE/VNY</option>
-  </select>
+    <div class="input-group">
+      <input type="date" id="flightDate" required>
+     <select id="flightRoute">
+  <option value="VNY/ASE">VNY/ASE</option>
+  <option value="ASE/VNY">ASE/VNY</option>
+  <option value="VNY/SJD">VNY/SJD</option>
+  <option value="SJD/VNY">SJD/VNY</option>
+  <option value="VNY/RIL">VNY/RIL</option>
+  <option value="RIL/VNY">RIL/VNY</option>
+  <option value="VNY/SUN">VNY/SUN</option>
+  <option value="SUN/VNY">SUN/VNY</option>
+  <option value="VNY/SLC">VNY/SLC</option>
+  <option value="SLC/VNY">SLC/VNY</option>
+  <option value="VNY/LAS">VNY/LAS</option>
+  <option value="LAS/VNY">LAS/VNY</option>
+  <option value="VNY/TRM">VNY/TRM</option>
+  <option value="TRM/VNY">TRM/VNY</option>
+  <option value="VNY/APC">VNY/APC</option>
+  <option value="APC/VNY">APC/VNY</option>
+  <option value="VNY/CSL">VNY/CSL</option>
+  <option value="CSL/VNY">CSL/VNY</option>
+</select>
 
-  <button onclick="submitWaste()">Submit</button>
-  <p id="response"></p>
+    </div>
+
+    <table>
+      <tr>
+        <th>Food Item</th>
+        <th>Waste Count</th>
+      </tr>
+      <tbody id="foodItems"></tbody>
+    </table>
+
+    <button id="submitBtn" onclick="submitWaste()">Submit</button>
+    <p id="response" class="status-message"></p>
+  </div>
+
+  <script src="app.js"></script>
+
 </body>
 </html>
