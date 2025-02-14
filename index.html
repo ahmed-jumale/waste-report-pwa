@@ -216,7 +216,7 @@
       window.items = items;
     });
 
-    function submitWaste() {
+function submitWaste() {
   var date = document.getElementById("flightDate").value;
   var flightRoute = document.getElementById("flightRoute").value;
   var response = document.getElementById("response");
@@ -240,7 +240,10 @@
 
   fetch("https://script.google.com/a/macros/aero.com/s/AKfycbyGu1aD6u014Pj7zvzx2ylnR8-kQhmJ8rbYrzaBQ2lfUOt9HJKIhu_v6JMKqw3lZv22/exec", {
     method: "POST",
-    headers: { "Content-Type": "application/json" },
+    headers: {
+      "Content-Type": "application/json",
+      "Authorization": "Bearer " + google.script.run.getAuthToken() // Ensure user is authenticated
+    },
     body: JSON.stringify({ date, flightRoute, wasteData }),
   })
   .then(res => res.json())
@@ -259,12 +262,13 @@
     response.classList.add("error-message");
   })
   .finally(() => {
-    submitBtn.disabled = false; // Re-enable the button
+    submitBtn.disabled = false;
     setTimeout(() => {
       response.style.display = "none";
     }, 5000);
   });
 }
+
 
   </script>
 
