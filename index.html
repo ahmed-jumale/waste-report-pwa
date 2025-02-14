@@ -241,19 +241,17 @@ function submitWaste() {
 
   fetch("https://script.google.com/a/macros/aero.com/s/AKfycbyGu1aD6u014Pj7zvzx2ylnR8-kQhmJ8rbYrzaBQ2lfUOt9HJKIhu_v6JMKqw3lZv22/exec", {
     method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      "Authorization": "Bearer " + google.script.run.getAuthToken() // Ensure user is authenticated
-    },
+    headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ date, flightRoute, wasteData }),
   })
   .then(res => res.json())
   .then(data => {
+    console.log("Response from Google Apps Script:", data);
     if (data.success) {
       response.innerHTML = "✅ Submission successful!";
       response.classList.add("success-message");
     } else {
-      response.innerHTML = "⚠️ Submission failed. Check your Google Apps Script.";
+      response.innerHTML = "⚠️ Submission failed: " + data.message;
       response.classList.add("error-message");
     }
   })
@@ -269,7 +267,6 @@ function submitWaste() {
     }, 5000);
   });
 }
-
 
   </script>
 
