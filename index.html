@@ -239,7 +239,11 @@ function submitWaste() {
   response.innerHTML = "⏳ Submitting...";
   response.style.display = "block";
 
-  fetch("https://script.google.com/a/macros/aero.com/s/AKfycbyZNPn2LuvICP5xErFS25vS0xQClWpDznYfZDyxBu84A5upOlMBQfoaU8w5-LNNmvZS/exec", {
+  // Use a proxy to bypass CORS restrictions
+  const proxyUrl = "https://cors-anywhere.herokuapp.com/";
+  const scriptUrl = "https://script.google.com/a/macros/aero.com/s/AKfycbyZNPn2LuvICP5xErFS25vS0xQClWpDznYfZDyxBu84A5upOlMBQfoaU8w5-LNNmvZS/exec";
+
+  fetch(proxyUrl + scriptUrl, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ date, flightRoute, wasteData }),
@@ -267,8 +271,6 @@ function submitWaste() {
     }, 5000);
   });
 }
-
-
   </script>
 
 </body>
