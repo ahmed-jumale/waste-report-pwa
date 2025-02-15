@@ -173,99 +173,71 @@
     <p id="response" class="status-message"></p>
   </div>
 
-  <script>
-    document.addEventListener("DOMContentLoaded", function () {
-        var tableBody = document.getElementById("foodItems");
-        var items = [
-            "Organic Strawberry Overnight Oats",
-            "Smoked Salmon Tartine",
-            "Organic Brownie GF",
-            "Organic Asian Chicken Salad",
-            "Cheese Box",
-            "Cheese & Charcuterie Plate",
-            "Mezze Plate: Item 1003",
-            "Organic Roast Beef Sandwich",
-            "Tofu Sticks with Tibetan Power Salad",
-            "Chicken Salad Slider",
-            "Turkey Slider with Veggies & Strawberries",
-            "Blueberries / Cut Strawberries",
-            "Chocolate Chip Banana Bread",
-            "FF - Caesar Salad",
-            "FF - Burrata Salad",
-            "FF - Chicken Salad Sandwich",
-            "FF - Mango Chia Pudding",
-            "FF - Chocolate Chip Cookie"
-        ];
+ <script>
+  function submitWaste() {
+      var date = document.getElementById("flightDate").value;
+      var flightRoute = document.getElementById("flightRoute").value;
+      var response = document.getElementById("response");
+      var submitBtn = document.getElementById("submitBtn");
 
-        items.forEach((item, index) => {
-            var row = tableBody.insertRow();
-            row.insertCell(0).innerHTML = item;
-            row.insertCell(1).innerHTML = `<input type='number' min='0' id='waste_${index}' value='0'>`;
-        });
+      if (!date) {
+          response.innerHTML = "⚠️ Please select a flight date!";
+          response.classList.add("error-message");
+          response.style.display = "block";
+          return;
+      }
 
-        window.items = items;
-    });
+      var wasteData = {};
+      var inputs = document.querySelectorAll("input[id^='waste_']");
 
-    function submitWaste() {
-        var date = document.getElementById("flightDate").value;
-        var flightRoute = document.getElementById("flightRoute").value;
-        var response = document.getElementById("response");
-        var submitBtn = document.getElementById("submitBtn");
+      inputs.forEach((input, index) => {
+          var value = input.value ? parseInt(input.value) : 0;
+          wasteData[window.items[index]] = value;
+      });
 
-        if (!date) {
-            response.innerHTML = "⚠️ Please select a flight date!";
-            response.classList.add("error-message");
-            response.style.display = "block";
-            return;
-        }
+      submitBtn.disabled = true;
 
-        var wasteData = {};
-        var inputs = document.querySelectorAll("input[id^='waste_']");
+      // ✅ Console Log Before Submitting
+      console.log("📤 Sending Data:", JSON.stringify({ date, flightRoute, wasteData }));
 
-        inputs.forEach((input, index) => {
-            var value = input.value ? parseInt(input.value) : 0;
-            wasteData[window.items[index]] = value;
-        });
+      // ✅ Create a form to submit data without fetch() (bypassing CORS)
+      var form = document.createElement("form");
+      form.method = "POST";
+      form.action = "https://script.google.com/macros/s/AKfycbzZ-_3oOL-ejiheyl2WMTajMMULLZwJ1SUDKmmYEYCBeW_dmMoYKT0YC0xxBl2DWBdD/exec";
 
-        submitBtn.disabled = true;
+      var inputDate = document.createElement("input");
+      inputDate.type = "hidden";
+      inputDate.name = "date";
+      inputDate.value = date;
+      form.appendChild(inputDate);
 
-        // ✅ Create a hidden form to submit data without fetch() (bypassing CORS)
-        var form = document.createElement("form");
-        form.method = "POST";
-        form.action = "https://script.google.com/macros/s/AKfycbzQSjCfE4BfxwPzih4-sn0Pv6pKuzMG6VeD6vSesPNVTLhmwANai3qxqipNoQS2LJje/exec";
+      var inputRoute = document.createElement("input");
+      inputRoute.type = "hidden";
+      inputRoute.name = "flightRoute";
+      inputRoute.value = flightRoute;
+      form.appendChild(inputRoute);
 
-        var inputDate = document.createElement("input");
-        inputDate.type = "hidden";
-        inputDate.name = "date";
-        inputDate.value = date;
-        form.appendChild(inputDate);
+      var inputWaste = document.createElement("input");
+      inputWaste.type = "hidden";
+      inputWaste.name = "wasteData";
+      inputWaste.value = JSON.stringify(wasteData);
+      form.appendChild(inputWaste);
 
-        var inputRoute = document.createElement("input");
-        inputRoute.type = "hidden";
-        inputRoute.name = "flightRoute";
-        inputRoute.value = flightRoute;
-        form.appendChild(inputRoute);
+      document.body.appendChild(form);
+      form.submit();
 
-        var inputWaste = document.createElement("input");
-        inputWaste.type = "hidden";
-        inputWaste.name = "wasteData";
-        inputWaste.value = JSON.stringify(wasteData);
-        form.appendChild(inputWaste);
+      response.innerHTML = "✅ Thank you! Your response has been submitted.";
+      response.classList.add("success-message");
+      response.style.display = "block";
 
-        document.body.appendChild(form);
-        form.submit();
-
-        response.innerHTML = "✅ Thank you! Your response has been submitted.";
-        response.classList.add("success-message");
-        response.style.display = "block";
-
-        setTimeout(() => {
-            response.style.display = "none";
-            submitBtn.disabled = false;
-            document.querySelectorAll("input[type='number']").forEach(input => input.value = "0");
-        }, 5000);
-    }
+      setTimeout(() => {
+          response.style.display = "none";
+          submitBtn.disabled = false;
+          document.querySelectorAll("input[type='number']").forEach(input => input.value = "0");
+      }, 5000);
+  }
 </script>
+
 
 </body>
 </html>
