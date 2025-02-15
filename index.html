@@ -236,7 +236,9 @@
         console.log("📤 Sending request to Google Apps Script..."); // ✅ Log request start
 
         // ✅ Send data to Google Apps Script
-        fetch("https://cors-anywhere.herokuapp.com/https://script.google.com/macros/s/AKfycbx-X49GZuYxwtjItEfsRMAS5q236xR9EJ4h3ImMG-ZcYhSStd76KbAjqWlFkVHrwtE-/exec", {
+        
+
+        fetch("https://script.google.com/macros/s/AKfycbwTinqBdIOkOVKfuNqDdk7PP0X2FPGlYxfFabmFBRvAHpBAtx1c2q-rNJw9lr1u9-P-/exec", {
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ date, flightRoute, wasteData }),
         })
