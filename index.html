@@ -217,61 +217,38 @@
       window.items = items;
     });
 
-function submitWaste() {
-  var date = document.getElementById("flightDate").value;
-  var flightRoute = document.getElementById("flightRoute").value;
-  var response = document.getElementById("response");
-  var submitBtn = document.getElementById("submitBtn");
+    function submitWaste() {
+        var date = document.getElementById("flightDate").value;
+        var flightRoute = document.getElementById("flightRoute").value;
+        var response = document.getElementById("response");
 
-  if (!date) {
-    response.innerHTML = "⚠️ Please select a flight date!";
-    response.classList.add("error-message");
-    response.style.display = "block";
-    return;
-  }
+        if (!date) {
+            response.innerHTML = "⚠️ Please select a flight date!";
+            return;
+        }
 
-  var wasteData = {};
-  document.querySelectorAll("input[id^='waste_']").forEach((input, index) => {
-    wasteData[window.items[index].trim().toLowerCase()] = input.value ? parseInt(input.value) : 0;
-  });
+        var wasteData = {};
+        document.querySelectorAll("input[id^='waste_']").forEach((input, index) => {
+            wasteData[index] = parseInt(input.value) || 0;
+        });
 
-  submitBtn.disabled = true;
-  response.innerHTML = "⏳ Submitting...";
-  response.style.display = "block";
-
-  // Use a proxy to bypass CORS restrictions
-  const proxyUrl = "https://cors-anywhere.herokuapp.com/";
-  const scriptUrl = "https://script.google.com/a/macros/aero.com/s/AKfycbyZNPn2LuvICP5xErFS25vS0xQClWpDznYfZDyxBu84A5upOlMBQfoaU8w5-LNNmvZS/exec";
-
-  fetch(proxyUrl + scriptUrl, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ date, flightRoute, wasteData }),
-  })
-  .then(res => res.json())
-  .then(data => {
-    console.log("Response from Google Apps Script:", data);
-    if (data.success) {
-      response.innerHTML = "✅ Submission successful!";
-      response.classList.add("success-message");
-    } else {
-      response.innerHTML = "⚠️ Submission failed: " + data.message;
-      response.classList.add("error-message");
+        // ✅ Use Google Apps Script URL for submission
+        fetch("https://script.google.com/macros/s/AKfycbywvnssCzO7wUl_kIX-3OBauQaYkFNzq2Fxm5Sf_HKi4SngDAR7UjhS3NBBWNRwo2qk/exec", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ date, flightRoute, wasteData }),
+        })
+        .then(res => res.json())
+        .then(data => {
+            response.innerHTML = data.message;
+        })
+        .catch(error => {
+            response.innerHTML = "⚠️ Submission failed. Try again!";
+            console.error("🚨 Error:", error);
+        });
     }
-  })
-  .catch(error => {
-    console.error("Error:", error);
-    response.innerHTML = "❌ Error submitting. Check console.";
-    response.classList.add("error-message");
-  })
-  .finally(() => {
-    submitBtn.disabled = false;
-    setTimeout(() => {
-      response.style.display = "none";
-    }, 5000);
-  });
-}
-  </script>
+</script>
+
 
 </body>
 </html>
