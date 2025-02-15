@@ -174,68 +174,35 @@
   </div>
 
  <script>
-  function submitWaste() {
-      var date = document.getElementById("flightDate").value;
-      var flightRoute = document.getElementById("flightRoute").value;
-      var response = document.getElementById("response");
-      var submitBtn = document.getElementById("submitBtn");
+  function submitWaste(date, wasteData, flightRoute) {
+  var sheet = SpreadsheetApp.openById("YOUR_SHEET_ID");
+  
+  try {
+    var sheetName = date.replace(/\//g, "-"); // Format sheet name
+    var targetSheet = sheet.getSheetByName(sheetName);
+    
+    if (!targetSheet) {
+      Logger.log("❌ No matching sheet found for: " + sheetName);
+      return false;
+    }
+    
+    var lastRow = targetSheet.getLastRow();
+    var newRow = [date, flightRoute];
 
-      if (!date) {
-          response.innerHTML = "⚠️ Please select a flight date!";
-          response.classList.add("error-message");
-          response.style.display = "block";
-          return;
-      }
+    Object.keys(wasteData).forEach(function(item) {
+      newRow.push(wasteData[item]);
+    });
 
-      var wasteData = {};
-      var inputs = document.querySelectorAll("input[id^='waste_']");
-
-      inputs.forEach((input, index) => {
-          var value = input.value ? parseInt(input.value) : 0;
-          wasteData[window.items[index]] = value;
-      });
-
-      submitBtn.disabled = true;
-
-      // ✅ Console Log Before Submitting
-      console.log("📤 Sending Data:", JSON.stringify({ date, flightRoute, wasteData }));
-
-      // ✅ Create a form to submit data without fetch() (bypassing CORS)
-      var form = document.createElement("form");
-      form.method = "POST";
-      form.action = "https://script.google.com/macros/s/AKfycbzZ-_3oOL-ejiheyl2WMTajMMULLZwJ1SUDKmmYEYCBeW_dmMoYKT0YC0xxBl2DWBdD/exec";
-
-      var inputDate = document.createElement("input");
-      inputDate.type = "hidden";
-      inputDate.name = "date";
-      inputDate.value = date;
-      form.appendChild(inputDate);
-
-      var inputRoute = document.createElement("input");
-      inputRoute.type = "hidden";
-      inputRoute.name = "flightRoute";
-      inputRoute.value = flightRoute;
-      form.appendChild(inputRoute);
-
-      var inputWaste = document.createElement("input");
-      inputWaste.type = "hidden";
-      inputWaste.name = "wasteData";
-      inputWaste.value = JSON.stringify(wasteData);
-      form.appendChild(inputWaste);
-
-      document.body.appendChild(form);
-      form.submit();
-
-      response.innerHTML = "✅ Thank you! Your response has been submitted.";
-      response.classList.add("success-message");
-      response.style.display = "block";
-
-      setTimeout(() => {
-          response.style.display = "none";
-          submitBtn.disabled = false;
-          document.querySelectorAll("input[type='number']").forEach(input => input.value = "0");
-      }, 5000);
+    targetSheet.appendRow(newRow);
+    Logger.log("✅ Data successfully saved.");
+    return true;
+    
+  } catch (error) {
+    Logger.log("🚨 Error in submitWaste: " + error.toString());
+    return false;
   }
+}
+
 </script>
 
 
