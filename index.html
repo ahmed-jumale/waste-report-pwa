@@ -230,10 +230,12 @@
       submitBtn.disabled = true;
 
       fetch("https://script.google.com/macros/s/AKfycbzZ-_3oOL-ejiheyl2WMTajMMULLZwJ1SUDKmmYEYCBeW_dmMoYKT0YC0xxBl2DWBdD/exec", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ date, flightRoute, wasteData }),
-      })
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    mode: "no-cors",  // TEMPORARY: Remove after debugging
+    body: JSON.stringify({ date, flightRoute, wasteData }),
+})
+
       .then(response => response.json())
       .then(data => {
         response.innerHTML = data.success ? "✅ Thank you! Your response has been submitted." : "⚠️ No flight scheduled.";
