@@ -210,46 +210,58 @@
       window.items = items;
     });
 
-    function submitWaste() {
-      var date = document.getElementById("flightDate").value;
-      var flightRoute = document.getElementById("flightRoute").value;
-      var response = document.getElementById("response");
-      
-      if (!date) {
-        response.innerHTML = "⚠️ Please select a flight date!";
-        response.classList.add("error-message");
-        response.style.display = "block";
-        return;
-      }
+   function submitWaste() {
+        var date = document.getElementById("flightDate").value;
+        var flightRoute = document.getElementById("flightRoute").value;
+        var response = document.getElementById("response");
+        var submitBtn = document.getElementById("submitBtn");
 
-      var wasteData = {};
-      var inputs = document.querySelectorAll("input[id^='waste_']");
-
-      inputs.forEach((input, index) => {
-        var value = input.value ? parseInt(input.value) : 0;
-        wasteData[window.items[index].trim().toLowerCase()] = value;
-      });
-
-      var submitBtn = document.getElementById("submitBtn");
-      submitBtn.disabled = true;
-
-      google.script.run.withSuccessHandler(function(success) {
-        if (!success) {
-          response.innerHTML = "⚠️ Sorry, there is no flight scheduled on this day.";
-          response.classList.add("error-message");
-        } else {
-          response.innerHTML = "✅ Thank you! Your response has been submitted.";
-          response.classList.add("success-message");
+        if (!date) {
+            response.innerHTML = "⚠️ Please select a flight date!";
+            response.classList.add("error-message");
+            response.style.display = "block";
+            return;
         }
-        response.style.display = "block";
 
-        setTimeout(() => {
-          response.style.display = "none";
-          submitBtn.disabled = false;
-          document.querySelectorAll("input[type='number']").forEach(input => input.value = "0");
-        }, 5000);
+        var wasteData = {};
+        document.querySelectorAll("input[id^='waste_']").forEach((input, index) => {
+            wasteData[window.items[index].trim().toLowerCase()] = parseInt(input.value) || 0;
+        });
 
-      }).submitWaste(date, wasteData, flightRoute);
+        submitBtn.disabled = true; // ✅ Grey out button during submission
+
+        // ✅ Send data to Google Apps Script
+        fetch("https://script.google.com/macros/s/AKfycbywvnssCzO7wUl_kIX-3OBauQaYkFNzq2Fxm5Sf_HKi4SngDAR7UjhS3NBBWNRwo2qk/exec", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ date, flightRoute, wasteData }),
+        })
+        .then(res => res.json())
+        .then(data => {
+            if (data.success) {
+                response.innerHTML = "✅ Thank you! Your response has been submitted.";
+                response.classList.remove("error-message");
+                response.classList.add("success-message");
+            } else {
+                response.innerHTML = "⚠️ Sorry, there is no flight scheduled on this day.";
+                response.classList.remove("success-message");
+                response.classList.add("error-message");
+            }
+            response.style.display = "block";
+
+            setTimeout(() => {
+                response.style.display = "none";
+                submitBtn.disabled = false; // ✅ Re-enable button after 5 seconds
+                document.querySelectorAll("input[type='number']").forEach(input => input.value = "0"); // ✅ Reset inputs
+            }, 5000);
+        })
+        .catch(error => {
+            response.innerHTML = "⚠️ Submission failed. Please try again!";
+            response.classList.add("error-message");
+            response.style.display = "block";
+            submitBtn.disabled = false;
+            console.error("🚨 Error:", error);
+        });
     }
   </script>
 
