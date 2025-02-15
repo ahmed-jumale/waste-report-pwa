@@ -174,104 +174,98 @@
   </div>
 
   <script>
-    document.addEventListener("DOMContentLoaded", function() {
-      var items = [
-        "Organic Strawberry Overnight Oats",
-        "Smoked Salmon Tartine",
-        "Organic Brownie GF",
-        "Organic Asian Chicken Salad",
-        "Cheese Box",
-        "Cheese & Charcuterie Plate",
-        "Mezze Plate: Item 1003",
-        "Organic Roast Beef Sandwich",
-        "Tofu Sticks with Tibetan Power Salad",
-        "Chicken Salad Slider",
-        "Turkey Slider with Veggies & Strawberries",
-        "Blueberries / Cut Strawberries",
-        "Chocolate Chip Banana Bread",
-        "FF - Caesar Salad",
-        "FF - Burrata Salad",
-        "FF - Chicken Salad Sandwich",
-        "FF - Mango Chia Pudding",
-        "FF - Chocolate Chip Cookie"
-      ];
+    document.addEventListener("DOMContentLoaded", function () {
+        var tableBody = document.getElementById("foodItems");
+        var items = [
+            "Organic Strawberry Overnight Oats",
+            "Smoked Salmon Tartine",
+            "Organic Brownie GF",
+            "Organic Asian Chicken Salad",
+            "Cheese Box",
+            "Cheese & Charcuterie Plate",
+            "Mezze Plate: Item 1003",
+            "Organic Roast Beef Sandwich",
+            "Tofu Sticks with Tibetan Power Salad",
+            "Chicken Salad Slider",
+            "Turkey Slider with Veggies & Strawberries",
+            "Blueberries / Cut Strawberries",
+            "Chocolate Chip Banana Bread",
+            "FF - Caesar Salad",
+            "FF - Burrata Salad",
+            "FF - Chicken Salad Sandwich",
+            "FF - Mango Chia Pudding",
+            "FF - Chocolate Chip Cookie"
+        ];
 
-      var tableBody = document.getElementById("foodItems");
-      tableBody.innerHTML = "";
+        items.forEach((item, index) => {
+            var row = tableBody.insertRow();
+            row.insertCell(0).innerHTML = item;
+            row.insertCell(1).innerHTML = `<input type='number' min='0' id='waste_${index}' value='0'>`;
+        });
 
-      items.forEach((item, index) => {
-        var row = tableBody.insertRow();
-        var cell1 = row.insertCell(0);
-        var cell2 = row.insertCell(1);
-        cell1.innerHTML = item;
-        cell2.innerHTML = `<input type='number' min='0' id='waste_${index}' value='0'>`;
-      });
-
-      window.items = items;
+        window.items = items;
     });
 
-function submitWaste() {
-    var date = document.getElementById("flightDate").value;
-    var flightRoute = document.getElementById("flightRoute").value;
-    var response = document.getElementById("response");
-    var submitBtn = document.getElementById("submitBtn");
+    function submitWaste() {
+        var date = document.getElementById("flightDate").value;
+        var flightRoute = document.getElementById("flightRoute").value;
+        var response = document.getElementById("response");
+        var submitBtn = document.getElementById("submitBtn");
 
-    if (!date) {
-        response.innerHTML = "⚠️ Please select a flight date!";
-        response.classList.add("error-message");
-        response.style.display = "block";
-        return;
-    }
-
-    var wasteData = {}; // ✅ Ensure wasteData is properly structured
-    var inputs = document.querySelectorAll("input[id^='waste_']");
-    
-    inputs.forEach((input, index) => {
-        var itemName = window.items[index]; // ✅ Get item name
-        var itemValue = parseInt(input.value) || 0; // ✅ Ensure it's a number
-        wasteData[itemName] = itemValue; // ✅ Store in object
-    });
-
-    console.log("📤 Sending Data:", JSON.stringify({ date, flightRoute, wasteData })); // ✅ Debugging log
-
-    submitBtn.disabled = true; // ✅ Disable button while submitting
-    response.innerHTML = "⏳ Submitting data...";
-    response.style.display = "block";
-    response.classList.remove("success-message", "error-message");
-
-    fetch("https://script.google.com/macros/s/AKfycbz2yl8i42u7stKZ4kG1X92vw_d-N0cTCRmTN3bA9hXFbizSBxVa6GB2pZZdQ183zWZQ/exec", { 
-        method: "POST",
-        mode: "cors",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ date, flightRoute, wasteData }) // ✅ Fix: Ensure wasteData is properly formatted
-    })
-    .then(res => res.json())
-    .then(data => {
-        console.log("✅ Server Response:", data);
-
-        if (data.success) {
-            response.innerHTML = "✅ Thank you! Your response has been submitted.";
-            response.classList.add("success-message");
-        } else {
-            response.innerHTML = "⚠️ Sorry, there is no flight scheduled on this day.";
+        if (!date) {
+            response.innerHTML = "⚠️ Please select a flight date!";
             response.classList.add("error-message");
+            response.style.display = "block";
+            return;
         }
+
+        var wasteData = {};
+        var inputs = document.querySelectorAll("input[id^='waste_']");
+
+        inputs.forEach((input, index) => {
+            var value = input.value ? parseInt(input.value) : 0;
+            wasteData[window.items[index]] = value;
+        });
+
+        submitBtn.disabled = true;
+
+        // ✅ Create a hidden form to submit data without fetch() (bypassing CORS)
+        var form = document.createElement("form");
+        form.method = "POST";
+        form.action = "https://script.google.com/macros/s/YOUR_DEPLOYMENT_URL/exec";
+
+        var inputDate = document.createElement("input");
+        inputDate.type = "hidden";
+        inputDate.name = "date";
+        inputDate.value = date;
+        form.appendChild(inputDate);
+
+        var inputRoute = document.createElement("input");
+        inputRoute.type = "hidden";
+        inputRoute.name = "flightRoute";
+        inputRoute.value = flightRoute;
+        form.appendChild(inputRoute);
+
+        var inputWaste = document.createElement("input");
+        inputWaste.type = "hidden";
+        inputWaste.name = "wasteData";
+        inputWaste.value = JSON.stringify(wasteData);
+        form.appendChild(inputWaste);
+
+        document.body.appendChild(form);
+        form.submit();
+
+        response.innerHTML = "✅ Thank you! Your response has been submitted.";
+        response.classList.add("success-message");
+        response.style.display = "block";
 
         setTimeout(() => {
             response.style.display = "none";
             submitBtn.disabled = false;
-            document.querySelectorAll("input[type='number']").forEach(input => input.value = "0"); // ✅ Reset inputs
+            document.querySelectorAll("input[type='number']").forEach(input => input.value = "0");
         }, 5000);
-    })
-    .catch(error => {
-        console.error("🚨 Fetch Error:", error);
-        response.innerHTML = "⚠️ Submission failed. Check console.";
-        response.classList.add("error-message");
-        submitBtn.disabled = false;
-    });
-}
-
-
+    }
 </script>
+
 </body>
 </html>
