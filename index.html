@@ -210,7 +210,7 @@
       window.items = items;
     });
 
-   function submitWaste() {
+function submitWaste() {
     var date = document.getElementById("flightDate").value;
     var flightRoute = document.getElementById("flightRoute").value;
     var response = document.getElementById("response");
@@ -224,20 +224,22 @@
     }
 
     var wasteData = {}; // ✅ Ensure wasteData is properly structured
-    document.querySelectorAll("input[id^='waste_']").forEach((input, index) => {
-        let itemName = window.items[index]; // ✅ Get item name
-        let itemValue = parseInt(input.value) || 0; // ✅ Ensure it's a number
+    var inputs = document.querySelectorAll("input[id^='waste_']");
+    
+    inputs.forEach((input, index) => {
+        var itemName = window.items[index]; // ✅ Get item name
+        var itemValue = parseInt(input.value) || 0; // ✅ Ensure it's a number
         wasteData[itemName] = itemValue; // ✅ Store in object
     });
 
-    console.log("📤 Sending Data:", { date, flightRoute, wasteData }); // ✅ Debugging log
+    console.log("📤 Sending Data:", JSON.stringify({ date, flightRoute, wasteData })); // ✅ Debugging log
 
     submitBtn.disabled = true; // ✅ Disable button while submitting
     response.innerHTML = "⏳ Submitting data...";
     response.style.display = "block";
     response.classList.remove("success-message", "error-message");
 
-    fetch("YOUR_NEW_DEPLOYMENT_URL_HERE", {
+    fetch("https://script.google.com/macros/s/AKfycbxnXE_Jv0EXyjO-DSWMbburM977eLjRSEJE5Wg-EtuMv9EJ81_73ec-TiMynceWJjeq/exec", {
         method: "POST",
         mode: "cors",
         headers: { "Content-Type": "application/json" },
@@ -268,6 +270,7 @@
         submitBtn.disabled = false;
     });
 }
+
 
 </script>
 </body>
