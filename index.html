@@ -5,11 +5,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>In-Flight Catering Waste</title>
 
-  <!-- Favicon & Home Screen App Icon -->
-  <link rel="apple-touch-icon" sizes="180x180" href="https://i.postimg.cc/gcqc27Qf/symbol-aero-medium.png">
-  <link rel="icon" type="image/png" href="https://i.postimg.cc/gcqc27Qf/symbol-aero-medium.png">
-  <meta name="mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-capable" content="yes"> <!-- Keep for legacy support -->
+  <!-- Home Screen & Favicon Fix -->
+  <link rel="apple-touch-icon" sizes="180x180" href="https://i.postimg.cc/d1RX89tH/Aero.png">
+  <link rel="shortcut icon" href="https://i.postimg.cc/d1RX89tH/Aero.png">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="apple-mobile-web-app-title" content="In-Flight Catering Waste">
   <meta name="theme-color" content="#000000">
 
@@ -35,32 +35,32 @@
     }
 
     .container {
-      width: 72%;
-      max-width: 630px;
+      width: 75%; /* Smaller width */
+      max-width: 650px; /* Reduced max-width */
       background: rgba(0, 0, 0, 0.8);
-      padding: 14px;
+      padding: 15px;
       border-radius: 10px;
-      margin-top: 160px;
+      margin-top: 180px; /* Adjusted to fit new template */
     }
 
     .guidance-text {
       font-size: 13px;
       color: #ddd;
-      margin-bottom: 10px;
+      margin-bottom: 12px;
     }
 
     .input-group {
       display: flex;
       justify-content: center;
       width: 100%;
-      gap: 6px;
-      padding: 6px;
+      gap: 8px;
+      padding: 8px;
     }
 
     .input-group input, .input-group select {
-      font-size: 14px;
-      padding: 8px;
-      width: 45%;
+      font-size: 15px;
+      padding: 12px;
+      width: 47%;
       border: 1px solid #CCC;
       border-radius: 6px;
       text-align: center;
@@ -71,15 +71,15 @@
     table {
       width: 100%;
       border-collapse: collapse;
-      font-size: 13px;
-      margin-top: 8px;
+      font-size: 14px;
+      margin-top: 10px;
       background: rgba(255, 255, 255, 0.9);
       color: black;
       border-radius: 6px;
     }
 
     th, td {
-      padding: 6px;
+      padding: 10px;
       text-align: left;
       border-bottom: 1px solid #ddd;
     }
@@ -90,9 +90,10 @@
     }
 
     input[type="number"] {
-      font-size: 13px;
-      max-width: 60px;
-      padding: 4px;
+      font-size: 14px;
+      width: 100%;
+      max-width: 70px;
+      padding: 5px;
       text-align: center;
       border-radius: 6px;
       border: 1px solid #CCC;
@@ -100,8 +101,8 @@
     }
 
     button {
-      font-size: 14px;
-      padding: 8px;
+      font-size: 16px;
+      padding: 10px;
       width: 100%;
       background-color: #FF6600;
       color: #FFF;
@@ -109,7 +110,7 @@
       border-radius: 8px;
       cursor: pointer;
       font-weight: bold;
-      margin-top: 10px;
+      margin-top: 15px;
       transition: background 0.3s;
     }
 
@@ -125,11 +126,10 @@
     .status-message {
       font-size: 14px;
       font-weight: bold;
+      margin-top: 12px;
       padding: 8px;
-      margin-top: 8px;
       border-radius: 5px;
-      display: none;
-      min-height: 40px;
+      display: none; /* Initially hidden */
     }
 
     .success-message {
@@ -141,11 +141,14 @@
       color: red;
       background: rgba(255, 0, 0, 0.2);
     }
+
   </style>
 </head>
 <body>
 
   <div class="container">
+    
+    <!-- 🔹 Guidance Message Above Dropdowns -->
     <p class="guidance-text">Submit one entry per sector (e.g., VNY-SJD). This form is only for scheduled services that cater Erewhon or Flora Farms.</p>
 
     <div class="input-group">
@@ -155,20 +158,6 @@
         <option value="ASE/VNY">ASE/VNY</option>
         <option value="VNY/SJD">VNY/SJD</option>
         <option value="SJD/VNY">SJD/VNY</option>
-        <option value="VNY/RIL">VNY/RIL</option>
-        <option value="RIL/VNY">RIL/VNY</option>
-        <option value="VNY/SUN">VNY/SUN</option>
-        <option value="SUN/VNY">SUN/VNY</option>
-        <option value="VNY/SLC">VNY/SLC</option>
-        <option value="SLC/VNY">SLC/VNY</option>
-        <option value="VNY/LAS">VNY/LAS</option>
-        <option value="LAS/VNY">LAS/VNY</option>
-        <option value="VNY/TRM">VNY/TRM</option>
-        <option value="TRM/VNY">TRM/VNY</option>
-        <option value="VNY/APC">VNY/APC</option>
-        <option value="APC/VNY">APC/VNY</option>
-        <option value="VNY/CSL">VNY/CSL</option>
-        <option value="CSL/VNY">CSL/VNY</option>
       </select>
     </div>
 
@@ -186,7 +175,6 @@
 
   <script>
     document.addEventListener("DOMContentLoaded", function() {
-      var tableBody = document.getElementById("foodItems");
       var items = [
         "Organic Strawberry Overnight Oats",
         "Smoked Salmon Tartine",
@@ -208,47 +196,62 @@
         "FF - Chocolate Chip Cookie"
       ];
 
+      var tableBody = document.getElementById("foodItems");
+      tableBody.innerHTML = "";
+
       items.forEach((item, index) => {
         var row = tableBody.insertRow();
-        row.insertCell(0).innerHTML = item;
-        row.insertCell(1).innerHTML = `<input type='number' min='0' id='waste_${index}' value='0'>`;
+        var cell1 = row.insertCell(0);
+        var cell2 = row.insertCell(1);
+        cell1.innerHTML = item;
+        cell2.innerHTML = `<input type='number' min='0' id='waste_${index}' value='0'>`;
       });
 
       window.items = items;
     });
 
     function submitWaste() {
-        var date = document.getElementById("flightDate").value;
-        var flightRoute = document.getElementById("flightRoute").value;
-        var response = document.getElementById("response");
+      var date = document.getElementById("flightDate").value;
+      var flightRoute = document.getElementById("flightRoute").value;
+      var response = document.getElementById("response");
+      
+      if (!date) {
+        response.innerHTML = "⚠️ Please select a flight date!";
+        response.classList.add("error-message");
+        response.style.display = "block";
+        return;
+      }
 
-        if (!date) {
-            response.innerHTML = "⚠️ Please select a flight date!";
-            return;
+      var wasteData = {};
+      var inputs = document.querySelectorAll("input[id^='waste_']");
+
+      inputs.forEach((input, index) => {
+        var value = input.value ? parseInt(input.value) : 0;
+        wasteData[window.items[index].trim().toLowerCase()] = value;
+      });
+
+      var submitBtn = document.getElementById("submitBtn");
+      submitBtn.disabled = true;
+
+      google.script.run.withSuccessHandler(function(success) {
+        if (!success) {
+          response.innerHTML = "⚠️ Sorry, there is no flight scheduled on this day.";
+          response.classList.add("error-message");
+        } else {
+          response.innerHTML = "✅ Thank you! Your response has been submitted.";
+          response.classList.add("success-message");
         }
+        response.style.display = "block";
 
-        var wasteData = {};
-        document.querySelectorAll("input[id^='waste_']").forEach((input, index) => {
-            wasteData[index] = parseInt(input.value) || 0;
-        });
+        setTimeout(() => {
+          response.style.display = "none";
+          submitBtn.disabled = false;
+          document.querySelectorAll("input[type='number']").forEach(input => input.value = "0");
+        }, 5000);
 
-        // ✅ Use Google Apps Script URL for submission
-        fetch("https://script.google.com/macros/s/AKfycbywvnssCzO7wUl_kIX-3OBauQaYkFNzq2Fxm5Sf_HKi4SngDAR7UjhS3NBBWNRwo2qk/exec", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ date, flightRoute, wasteData }),
-        })
-        .then(res => res.json())
-        .then(data => {
-            response.innerHTML = data.message;
-        })
-        .catch(error => {
-            response.innerHTML = "⚠️ Submission failed. Try again!";
-            console.error("🚨 Error:", error);
-        });
+      }).submitWaste(date, wasteData, flightRoute);
     }
-</script>
-
+  </script>
 
 </body>
 </html>
