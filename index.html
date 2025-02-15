@@ -239,6 +239,12 @@
         
 
         fetch("https://script.google.com/macros/s/AKfycbwTinqBdIOkOVKfuNqDdk7PP0X2FPGlYxfFabmFBRvAHpBAtx1c2q-rNJw9lr1u9-P-/exec", {
+    method: "POST",
+    mode: "cors", // ✅ Ensures it sends the request properly
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ date, flightRoute, wasteData }) // ✅ Fixes "GET cannot have body" issue
+})
+
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ date, flightRoute, wasteData }),
         })
